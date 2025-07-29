@@ -35,7 +35,13 @@ extension UIViewController: YDViewControllerProtocol {
     open var isInteractivePopGestureEnabled: Bool { YDRootNavigationController.appAppearance.isInteractivePopGestureEnabled }
     open var isFullScreenPopGestureEnabled: Bool { YDRootNavigationController.appAppearance.isFullScreenPopGestureEnabled }
     open var backItem: UIBarButtonItem? { nil }
-    open var backItemType: YDBackItemType { .default() }
+    open var backItemType: YDBackItemType { if #available(iOS 13.0, *) {
+        .image(UIImage(systemName: "chevron.left")?.withRenderingMode(.alwaysTemplate), imageInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), tintColor: .label)
+        } else {
+            // Fallback on earlier versions
+            .default()
+        }
+    }
     open var navigationBarAppearence: YDNavigationBarAppearence {
         YDNavigationBarAppearence()
     }
